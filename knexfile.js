@@ -1,13 +1,14 @@
 // Update with your config settings.
 
 module.exports = {
-
-  development: {
-    client: 'sqlite3',
-    connection: {
-      filename: './dev.sqlite3'
-    }
-  },
+ 
+  development: {
+    client: 'pg',
+    connection: {
+      database: 'pmpProjects',
+      host: '127.0.0.1'
+    }
+  },
 
   staging: {
     client: 'postgresql',
