@@ -22,7 +22,7 @@ router.get('/:id', function(req, res, next) {
 router.post('/add', function(req, res, next){
   knex.raw(`INSERT INTO projects(program_name, number_of_projects, program_manager, priority, status, complete) VALUES ('${req.body.program_name}','${req.body.number_of_projects}','${req.body.program_manager}','${req.body.priority}','${req.body.status}','${req.body.complete}')`)
   .then(function(data){
-    res.json(data.rows);
+    knex('projects').select().then(data => res.json(data))
   })
 });
 
@@ -30,8 +30,8 @@ router.post('/add', function(req, res, next){
  
 router.get('/:id/edit', function(req, res, next){
   knex.raw(`SELECT  * FROM projects WHERE id = ${req.params.id}`)
-  .then(data => {
-    res.json(data.rows)
+  .then( () => {
+    knex('projects').select().then(data => res.json(data))
   })
 });
  
@@ -39,17 +39,17 @@ router.get('/:id/edit', function(req, res, next){
  
 router.post('/:id', function(req, res, next){
   knex.raw(`UPDATE project set  program_name = '${req.body.program_name}', number_of_projects = '${req.body.number_of_projects}', program_name = '${req.body.program_name}', priority = '${req.body.priority}', status = '${req.body.status}', complete = '${req.body.complete}' WHERE id = ${req.params.id}`)
-    .then(function(data){
-      knex('project').select().then(projects => res.json(projects))
-    });
+  .then( () => {
+    knex('projects').select().then(data => res.json(data))
+  })
 });
 
 // DELETE PLAYER
 router.post('/:id/delete', function(req, res, next){
         knex.raw(`DELETE FROM projects WHERE id = ${req.params.id}`)
-        .then(function(data){
-          knex('project').select().then(projects => res.json(projects))
-        });
+  .then( () => {
+  knex('projects').select().then(data => res.json(data))
+  })
       });
 
 module.exports = router;
